@@ -1,0 +1,7 @@
+.card mb-4 {
+  background-color: grey;
+}
+
+.card .card-body {
+  padding-bottom: 20rem;
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban View</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="test1-krina.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>\
+
+    
+
+
+  </head>
+  <body>
+    <div class="container mt-5">
+      <!-- Task Input Form -->
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+          <h1>Kanban View</h1>
+        </div>
+
+        <div class="card-body">
+          <form id="taskForm">
+
+            <div class="mb-3">
+              <label for="taskInput" class="form-label">Tugas</label>
+              <input
+                type="text"
+                class="form-control"
+                id="taskInput"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="statusSelect" class="form-label">Status</label>
+              <select class="form-select" id="statusSelect">
+                <option value="Pending">Pending</option>
+                <option value="Planning">Planning</option>
+                <option value="Design">Design</option>
+                <option value="Development">Development</option>
+                <option value="Testing">Testing</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Tambah</button>
+          </form>
+
+        <!-- Kanban Layout -->
+
+      <div class="card-body">
+
+        <div class="row">
+          <div class="col" id="pendingColumn">
+            <div class="card">
+              <div class="card-header">Pending</div>
+              <div class="card-body">
+                  <!-- Pending tasks will be appended here -->
+                </div>
+              </div>
+            </div>
+            <div class="col" id="planningColumn">
+              <div class="card">
+                <div class="card-header">Planning</div>
+                <div class="card-body">
+                  <!-- Planning tasks will be appended here -->
+                </div>
+              </div>
+            </div>
+            <div class="col" id="designColumn">
+              <div class="card">
+                <div class="card-header">Design</div>
+                <div class="card-body">
+                  <!-- Design tasks will be appended here -->
+                </div>
+              </div>
+            </div>
+            <div class="col" id="developmentColumn">
+              <div class="card">
+                <div class="card-header">Development</div>
+                <div class="card-body">
+                  <!-- Development tasks will be appended here -->
+                </div>
+              </div>
+            </div>
+            <div class="col" id="testingColumn">
+              <div class="card">
+                <div class="card-header">Testing</div>
+                <div class="card-body">
+                  <!-- Testing tasks will be appended here -->
+                </div>
+              </div>
+            </div>
+            <div class="col" id="resolvedColumn">
+              <div class="card">
+                <div class="card-header">Resolved</div>
+                <div class="card-body">
+                  <!-- Resolved tasks will be appended here -->
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+      
+
+    <script>
+      function addNewTugas() {
+        var task = $("#taskInput").val();
+        var status = $("#statusSelect").val();
+
+        // Validate that the task input is not empty
+        if (task.trim() === "") {
+          alert("Tugas tidak boleh kosong!");
+          return;
+        }
+
+        // Create a new task card
+        var taskCard = $(
+          '<div class="card mt-2">' +
+            '<div class="card-body">' +
+            task +
+            "</div></div>"
+        );
+
+        // Append the task to the respective column based on the selected status
+        var columnSelector = "#" + status.toLowerCase() + "Column";
+        $(columnSelector + " .card-body").append(taskCard);
+
+        // Clear form fields after adding the task
+        $("#taskInput").val("");
+        $("#statusSelect").val("Pending");
+
+        // Add double-click delete functionality to the newly added card
+        taskCard.on("dblclick", function () {
+          $(this).remove(); // Remove the task card on double-click
+        });
+      }
+
+      $(document).ready(function () {
+        // Function to handle form submission and add tasks to the board
+        $("#taskForm").on("submit", function (event) {
+          event.preventDefault();
+          addNewTugas();
+        });
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
